@@ -142,7 +142,7 @@ Usage: <class_name>.update(<_id>, <dictionary>)
 ```
 <br>
 
-###### Resources
+## Resources
 
 **Read or watch:**
 
