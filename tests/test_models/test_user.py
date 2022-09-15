@@ -10,7 +10,7 @@ import sys
 import datetime
 import pep8
 
-storagge = getenv("HBNB_TYPE_STORAGE", "fs")
+storage = getenv("HBNB_TYPE_STORAGE", "fs")
 
 
 class TestUser(unittest.TestCase):

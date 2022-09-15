@@ -24,7 +24,7 @@ class TestCity(unittest.TestCase):
         """Tear down unittest"""
         del cls.new_city
         try:
-            os.remove("file.json")
+            remove("file.json")
         except FileNotFoundError:
             pass
 

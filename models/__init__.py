@@ -18,6 +18,6 @@ else:
 
 
 classes = {"User": User, "BaseModel": BaseModel, "Place": Place,
-           "State": State, "City": City, "Amenity": Amenity, "Review": Review)
+           "State": State, "City": City, "Amenity": Amenity, "Review": Review}
 
 storage.reload()

@@ -22,7 +22,7 @@ class TestAmenity(unittest.TestCase):
         """TearDown Amenity unittest"""
         del cls.new_amenity
         try:
-            os.remove("file.json")
+            remove("file.json")
         except FileNotFoundError:
             pass
 

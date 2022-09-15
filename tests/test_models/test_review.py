@@ -19,11 +19,12 @@ class TestReview(unittest.TestCase):
         cls.rev.place_id = "Hansel and Gretel 123"
         cls.rev.text = "The strongest in the Multiverse"
 
+    @classmethod
     def tearDownClass(cls):
         """Tear down unittest"""
         del cls.rev
         try:
-            os.remove("file.json")
+            remove("file.json")
         except FileNotFoundError:
             pass
 

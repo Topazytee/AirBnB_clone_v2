@@ -30,11 +30,11 @@ class TestBase(unittest.TestCase):
     def test_ids_differs(self):
         """Test check for different id between instances"""
         new_model = BaseModel()
-        self.assertNotEqual(new_model.id, self.new_model.id)
+        self.assertNotEqual(new_model.id, self.my_model.id)
 
     def test_name(self):
         """Test check for attribute to be added"""
-        self.assertEqual("Liz Benson", self.new_model.name)
+        self.assertEqual("Liz Benson", self.my_model.name)
 
     def test_a_updated_created_equal(self):
         """Test check for date equality"""

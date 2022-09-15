@@ -31,6 +31,7 @@ class testFileStorage(unittest.TestCase):
 
     def test_all_return_type(self):
         """Test check for type return value"""
+        storage_all = self.storage.all()
         self.assertIsInstance(storage_all, dict)
 
     def test_new_method(self):

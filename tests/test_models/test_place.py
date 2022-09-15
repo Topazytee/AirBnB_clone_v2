@@ -47,7 +47,7 @@ class TestPlace(unittest.TestCase):
         self.assertTrue('max_guest' in self.new_place.__dir__())
         self.assertTrue('price_by_night' in self.new_place.__dir__())
         self.assertTrue('latitude' in self.new_place.__dir__())
-        self.assertTrue('longitude' in self.new_place.__dict__())
+        self.assertTrue('longitude' in self.new_place.__dir__())
 
     @unittest.skipIf(storage == "db", "Testing database for storage only")
     def test_place_amenity_attrb(self):
@@ -75,7 +75,7 @@ class TestPlace(unittest.TestCase):
     @unittest.skipIf(storage == "db", "Testing database for storage only")
     def test_type_amenity(self):
         """Test check for type amenity"""
-        amenity = getattr(self.new_place, "amenity-ids")
+        amenity = getattr(self.new_place, "amenity_ids")
         self.assertIsInstance(amenity, list)
 
     @unittest.skipIf(storage == "db", "Testing database for storage only")
