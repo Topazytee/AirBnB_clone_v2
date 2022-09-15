@@ -1,7 +1,14 @@
 #!/usr/bin/python3
 """This module defines a class to manage file storage for hbnb clone"""
 import json
-import models
+import datetime
+from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 
 class FileStorage:
@@ -11,51 +18,78 @@ class FileStorage:
 
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
-        new_dict = {}
-        if cls is None:
-            return self.__objects
-        if cls != "":
-            for k, v in self.__objects.items():
-                if cls == k.split(".")[0]:
-                    new_dict[k] = v
-            return new_dict
-        else:
-            return self.__objects
+        if cls:
+            return {key: obj for (key, obj) in self.__objects.items()
+                    if isinstance(obj, cls)}
+        return self.__objects
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
-        key = str(obj.__class__.__name__) + "." + str(obj.id)
-        value_dict = obj
-        FileStorage.__objects[key] = value_dict
+        if obj:
+            key = "{}.{}".format(type(obj).__name__, obj.id)
+            self.__objects[key] = obj
 
     def save(self):
         """Saves storage dictionary to file"""
         objects_dict = {}
-        for key, val in FileStorage.__objects.items():
-            objects_dict[key] = val.to_dict()
+        for key, val in self.__objects.items():
+            objects_dict[key] = value.to_dict()
 
-        with open(FileStorage.__file_path, mode='w', encoding="UTF8") as fd:
+        with open(self.__file_path, 'w', encoding="UTF-8") as fd:
             json.dump(objects_dict, fd)
 
     def reload(self):
         """Deserialize json file"""
         try:
-            with open(FileStorage.__file_path, encoding="UTF8") as fd:
-                FileStorage.__objects = json.load(fd)
-            for key, val in FileStorage.__objects.items():
-                class_name = val['__class__']
-                class_name = models.classes[class_name]
-                FileStorage.__objects[key] = class_name(**val)
+            with open(self.__file_path, encoding="UTF-8") as fd:
+                for key, value in (json.load(fd)).items():
+                    value = eval(value["__class__"])(**value)
+                    self.__objects[key] = value
         except FileNotFoundError:
             pass
 
     def delete(self, obj=None):
         """Deletes an object"""
-        if obj is not None:
-            key = str(obj.__class__.__name__) + "." + str(obj.id)
-            FileStorage.__objects.pop(key, None)
-            self.save()
+        if obj:
+            key = "{}.{}".format(type(obj).__name__, obj.id)
+            if (key, obj) in self.__objects.items():
+                self.__objects.pop(key, None)
+        self.save()
 
     def close(self):
         """Deserializes JSON file to objects"""
         self.reload()
+
+    def classes(self):
+        """Return dict repr"""
+        from models.base_model import BaseModel
+        from models.user import User
+        from models.state import State
+        from models.city import City
+        from models.amenity import Amenity
+        from models.place import Place
+        from models.review import Review
+
+        classes = {"BaseModel": BaseModel, "User": User, "State": State,
+                   "City": City, "Amenity": Amenity, "Place": Place,
+                   "Review": Review}
+        return classes
+
+    def attributes(self):
+        """Returns valid attributes"""
+        attributes = {"BaseModel": {"id": str,
+                                    "created_at": datetime.datetime,
+                                    "updated_at": datetime.datetime},
+                      "User": {"email": str, "password": str,
+                               "first_name": str, "last_name": str},
+                      "State": {"name": str},
+                      "City": {"state_id": str, "name": str},
+                      "Amenity": {"name": str},
+                      "Place": {"city_id": str, "user_id": str, "name": str,
+                                "description": str, "number_rooms": int,
+                                "number_bathrooms": int, "max_guest": int,
+                                "price_by_night": int, "latitude": float,
+                                "longitude": float, "amenity_ids": list},
+                      "Review": {"place_id": str, "user_id": str, "text": str}
+                      }
+        return attributes
