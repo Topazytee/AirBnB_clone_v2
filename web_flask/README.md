@@ -16,3 +16,5 @@ _For this project, look at this concept:_
 * [Flask](https://www.palletsprojects.com/p/flask/)
 
 ## General Learning
+
+* [W3C-Validator](https://www.github.com/holbertonschool/W3C-Validator)
