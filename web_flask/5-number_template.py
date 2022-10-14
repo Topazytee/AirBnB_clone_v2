@@ -7,7 +7,7 @@ default text value "is cool"
 /number_template/<n>: display a HTML page ONLY if n is an integer, H1 tag:
 "Number: n" inside the tag BODY
 Must use strict_slashes=False in route definition """
-from flask import Flask
+from flask import Flask, render_template
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 
