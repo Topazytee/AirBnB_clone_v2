@@ -75,7 +75,7 @@ class FileStorage:
 
     def close(self):
         """Removes database"""
-        self.__session.close()
+        self.__session.remove()
 
     def classes(self):
         """Return dict repr"""
